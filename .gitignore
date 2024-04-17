@@ -28,3 +28,16 @@ echo 'standby 0' | cec-client -s -d 1
 crontab -e
 0 18 * * * echo 'standby 0' | cec-client -s -d 1
 0 8 * * * echo 'on 0' | cec-client -s -d 1
+
+/** This is for the touchscreen */
+sudo rm -rf LCD-show
+git clone https://github.com/goodtft/LCD-show.git
+chmod -R 755 LCD-show
+cd LCD-show/
+sudo ./LCD35-show
+
+cd LCD-show/
+sudo dpkg -i -B xinput-calibrator_0.7.5-1_armhf.deb
+
+cd LCD-show/
+sudo ./rotate.sh 90
