@@ -1,13 +1,30 @@
-*.tar
-*.tar.*
-*.jar
-*.exe
-*.msi
-*.zip
-*.tgz
-*.log
-*.log.*
-*.sig
+// Use to rotate the screen orientations
 
-pkg/
-src/
+<html>
+<body style="height: 100%; width: 100%; margin: 0px; padding: 0px; overflow: hidden;">
+<iframe src="YOUR-DAKBOARD-URL" style="position: absolute; height: 3840px; width: 2160px; padding: 0px; margin: -1920px 0px 0px -1080px; border: 0px; left: 50%; top: 50%; transform: rotate(90deg);">
+</iframe>
+</body>
+</html>
+
+// Auto Launch on Power
+sudo apt-get -y install unclutter
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+@xset s 0 0
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash
+@xset s 0 0
+@xset s noblank
+@xset s noexpose
+@xset dpms 0 0 0
+@unclutter -idle 0
+chromium-browser --kiosk --start-fullscreen /home/pi/Desktop/dakrotate.html
+
+// *if using a TV instead, use this code to power on the HDMI-CEC
+sudo apt-get -y install cec-utils
+echo 'on 0' | cec-client -s -d 1
+echo 'standby 0' | cec-client -s -d 1
+crontab -e
+0 18 * * * echo 'standby 0' | cec-client -s -d 1
+0 8 * * * echo 'on 0' | cec-client -s -d 1
